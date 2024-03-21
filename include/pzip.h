@@ -2,6 +2,20 @@
 #define PZIP_H
 
 #include <stdint.h>
+#include <pthread.h>
+
+/**
+ * The struct that holds all the thread data
+ * 
+ */
+struct ThreadData{
+    int start_index;
+    int end_index;
+    char *input_chars;
+    int *char_frequency;
+	pthread_mutex_t *mutex;
+	pthread_barrier_t *barrier; 
+};
 
 /**
  * The struct that holds consecutive character-occurence pairs.
@@ -10,7 +24,12 @@ struct zipped_char {
 	char character;
 	uint8_t occurence;
 };
-
+/**
+*callback_function() - callback pthread function
+*Inputs:
+*@args:    
+*/
+void *callback_function(void *args);
 /**
  * pzip() - zip an array of characters in parallel
  *
